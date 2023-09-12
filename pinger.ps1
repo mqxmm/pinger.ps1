@@ -13,11 +13,7 @@ if ($ip -and $start -and $end) {
         $pingResult = Test-Connection -ComputerName $address -Count 1 -ErrorAction SilentlyContinue -AsJob
         $jobs += $pingResult
     }
-
-    # Wait for all ping jobs to complete
     $jobs | Wait-Job
-
-    # Check the results of each job
     $jobs | ForEach-Object {
         $pingResult = Receive-Job -Job $_
         Remove-Job -Job $_
